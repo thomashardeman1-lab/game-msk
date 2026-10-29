@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>De Digitale Vossenjacht • MSK Gent</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -15,17 +13,12 @@
             background-color: #0f1612;
             background-image: radial-gradient(circle at 50% 20%, #1a2a20 0%, #0c120e 100%);
         }
-        .gold-border {
-            border: 1px solid rgba(217, 119, 6, 0.3);
-        }
-        .gold-glow:hover {
-            box-shadow: 0 0 25px rgba(217, 119, 6, 0.25);
-        }
+        .gold-border { border: 1px solid rgba(217, 119, 6, 0.3); }
+        .gold-glow:hover { box-shadow: 0 0 25px rgba(217, 119, 6, 0.25); }
     </style>
 </head>
 <body class="bg-canvas text-stone-200 min-h-screen flex flex-col justify-between selection:bg-amber-800 selection:text-white">
 
-    <!-- Header -->
     <header class="w-full border-b border-amber-900/30 bg-[#121c17]/80 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
@@ -39,17 +32,15 @@
         </div>
     </header>
 
-    <!-- Hero / Startpagina Content -->
     <main class="flex-1 flex items-center justify-center p-6 md:p-12">
         <div class="max-w-4xl w-full grid md:grid-cols-12 gap-8 items-center">
             
-            <!-- Linkerkolom: Sfeerbeeld / Kunstwerk -->
             <div class="md:col-span-5 relative group">
-                <div class="absolute -inset-1 bg-gradient-to-r from-amber-600/30 to-amber-900/30 rounded-2xl blur-lg opacity-70 group-hover:opacity-100 transition duration-1000"></div>
+                <div class="absolute -inset-1 bg-gradient-to-r from-amber-600/30 to-amber-900/30 rounded-2xl blur-lg opacity-70"></div>
                 <div class="relative bg-stone-900 rounded-2xl overflow-hidden gold-border aspect-[3/4] shadow-2xl">
                     <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80" 
                          alt="Classic Still Life" 
-                         class="w-full h-full object-cover object-center opacity-85 hover:scale-105 transition-transform duration-700">
+                         class="w-full h-full object-cover object-center opacity-85">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent p-6 flex flex-col justify-end">
                         <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold mb-1">Details uit de verzameling</span>
                         <p class="font-serif text-sm text-stone-300 italic">"Stilleven met uil en jachtbuit" — Peeter Boel</p>
@@ -57,7 +48,6 @@
                 </div>
             </div>
 
-            <!-- Rechterkolom: Introductie & Start CTA -->
             <div class="md:col-span-7 space-y-6 text-left">
                 <div class="inline-flex items-center gap-2 bg-amber-950/50 border border-amber-800/30 px-3.5 py-1.5 rounded-full text-amber-300 text-xs font-semibold uppercase tracking-wider">
                     <span>🦊 🏹</span>
@@ -72,7 +62,6 @@
                     Stap in de wereld van 17e-eeuwse jachttaferelen. Speur door de schilderijen van het MSK Gent, ontrafel de verborgen details en neem het tegen elkaar op.
                 </p>
 
-                <!-- Spelregels in het kort -->
                 <div class="grid grid-cols-2 gap-4 py-2 border-y border-amber-900/30">
                     <div class="space-y-1">
                         <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Rol 1: De Vos</span>
@@ -84,7 +73,6 @@
                     </div>
                 </div>
 
-                <!-- Actieknop -->
                 <div class="pt-2">
                     <button onclick="alert('Het spel wordt geladen...')" class="w-full sm:w-auto bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-stone-950 font-bold px-8 py-4 rounded-xl shadow-xl transition-all transform hover:-translate-y-0.5 gold-glow text-lg flex items-center justify-center gap-3">
                         <span>Start de Jacht</span>
@@ -96,7 +84,6 @@
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="w-full border-t border-amber-900/20 py-6 text-center text-xs text-stone-500">
         <p>© MSK Gent • Ontwikkeld voor de interactieve museum-installatie</p>
     </footer>
