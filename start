@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Digitale Vossenjacht - MSK Gent</title>
+    <!-- Tailwind CSS voor snelle styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Elegant Serif & Clean Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+    </style>
+</head>
+<body class="bg-[#111814] text-[#F3F4F6] min-h-screen flex flex-col justify-between selection:bg-amber-700 selection:text-white">
+
+    <!-- Header / Navigatie -->
+    <header class="border-b border-amber-900/40 bg-[#16221B]/80 backdrop-blur px-6 py-4 flex justify-between items-center">
+        <div>
+            <span class="text-xs uppercase tracking-widest text-amber-500 font-semibold">MSK Gent • Museuminstallatie</span>
+            <h1 class="font-serif text-xl md:text-2xl text-amber-100">De Digitale Vossenjacht</h1>
+        </div>
+        <div id="game-status" class="hidden text-sm bg-amber-950/60 border border-amber-700/50 px-4 py-1.5 rounded-full text-amber-200">
+            Ronde: <span id="round-indicator">1</span> / 4
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 flex flex-col items-center justify-center p-4 md:p-8 max-w-6xl mx-auto w-full">
+
+        <!-- SCHERM 1: Startscherm -->
+        <div id="screen-start" class="text-center max-w-2xl mx-auto space-y-6 py-12">
+            <div class="inline-block p-3 bg-amber-900/30 border border-amber-600/40 rounded-2xl mb-2">
+                <span class="text-3xl">🦊 🏹</span>
+            </div>
+            <h2 class="font-serif text-4xl md:text-5xl text-amber-100 leading-tight">Speur door de 17e-eeuwse meesterwerken</h2>
+            <p class="text-stone-300 text-base md:text-lg leading-relaxed">
+                Een interactief tweespelerspel voor het museum. Wie ontrafelt de geheimen van de jacht en verslaat zijn tegenstander als Vos of Jager?
+            </p>
+            <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="startGame()" class="bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold px-8 py-4 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 text-lg flex items-center justify-center gap-3">
+                    <span>Start de Jacht (2 Spelers)</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- SCHERM 2: Gameplay (Split-Screen 2 Spelers) -->
+        <div id="screen-game" class="hidden w-full space-y-6">
+            <!-- Kunstwerk & Vraag Info -->
+            <div class="bg-[#18261E] border border-amber-900/30 rounded-2xl p-6 shadow-xl grid md:grid-cols-3 gap-6 items-center">
+                <div class="md:col-span-1 bg-stone-900 rounded-xl overflow-hidden border border-stone-800 aspect-video md:aspect-square flex items-center justify-center relative">
+                    <!-- Visuele placeholder van schilderij -->
+                    <div id="artwork-container" class="absolute inset-0 bg-cover bg-center opacity-80" style="background-image: url('https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-transparent to-transparent flex items-end p-4">
+                        <span id="artwork-title" class="text-xs font-medium text-amber-200 bg-black/60 px-2.5 py-1 rounded-md backdrop-blur-sm">Stilleven met uil en jachtbuit - Peeter Boel</span>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span id="question-tag" class="text-xs font-semibold uppercase tracking-wider bg-amber-900/50 text-amber-300 px-3 py-1 rounded-full border border-amber-700/30">Makkelijk</span>
+                        <div class="text-stone-400 text-sm">Timer: <span id="timer" class="font-bold text-amber-400">45</span>s</div>
+                    </div>
+                    <h3 id="question-text" class="font-serif text-xl md:text-2xl text-amber-100">Welk dier wordt het meest gebruikt in de jacht?</h3>
+                </div>
+            </div>
+
+            <!-- Split Screen Speler Knoppen (Speler 1 vs Speler 2) -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Speler 1 (De Vos) -->
+                <div class="bg-[#16221B] border border-amber-900/40 rounded-2xl p-6 shadow-lg space-y-4">
+                    <div class="flex justify-between items-center border-b border-stone-800 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                            <h4 class="font-bold text-amber-200">Speler 1: De Vos</h4>
+                        </div>
+                        <span class="text-sm bg-stone-900 px-3 py-1 rounded-full text-amber-400 font-semibold">Score: <span id="score-1">0</span></span>
+                    </div>
+                    <div id="options-p1" class="grid grid-cols-1 gap-2.5">
+                        <!-- Dynamische opties komen hier -->
+                    </div>
+                </div>
+
+                <!-- Speler 2 (De Jager) -->
+                <div class="bg-[#16221B] border border-amber-900/40 rounded-2xl p-6 shadow-lg space-y-4">
+                    <div class="flex justify-between items-center border-b border-stone-800 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                            <h4 class="font-bold text-emerald-200">Speler 2: De Jager</h4>
+                        </div>
+                        <span class="text-sm bg-stone-900 px-3 py-1 rounded-full text-emerald-400 font-semibold">Score: <span id="score-2">0</span></span>
+                    </div>
+                    <div id="options-p2" class="grid grid-cols-1 gap-2.5">
+                        <!-- Dynamische opties komen hier -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCHERM 3: Eindscherm -->
+        <div id="screen-end" class="hidden text-center max-w-xl mx-auto space-y-6 py-12">
+            <div class="inline-block p-4 bg-amber-600/20 border border-amber-500/40 rounded-full mb-2">
+                <span class="text-4xl">🏆</span>
+            </div>
+            <h2 class="font-serif text-3xl md:text-4xl text-amber-100">De Jacht is Ten Einde!</h2>
+            <p id="winner-announcement" class="text-lg text-stone-300 font-medium">De Jagers hebben de vossen te pakken!</p>
+            
+            <div class="bg-[#18261E] border border-amber-900/30 p-6 rounded-2xl text-left space-y-3">
+                <h4 class="font-serif text-amber-200 text-lg font-semibold">Wist je dat? (Historische Context)</h4>
+                <p class="text-sm text-stone-300 leading-relaxed">
+                    In de 17e eeuw werd de <em class="text-amber-300">trompe de chasse</em> (de Franse jachthoorn) gebruikt om signalen te geven zoals <em>Hallali</em> (het overwinningssignaal wanneer het wild gestuit was). Uilen werden bovendien vaak ingezet als lokdier!
+                </p>
+            </div>
+
+            <button onclick="resetGame()" class="bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold px-8 py-3.5 rounded-xl shadow-lg transition-all">
+                Speel Opnieuw
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-xs text-stone-500 border-t border-stone-900">
+        Museum voor Schone Kunsten Gent (MSK) • Interactieve Installatie Prototype
+    </footer>
+
+    <!-- JavaScript Game Logic & Audio -->
+    <script>
+        // Vragenlijst gebaseerd op jullie gegevens (Margit & Maura)
+        const questions = [
+            {
+                level: "Makkelijk",
+                artwork: "Stilleven met jachtbuit",
+                image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80",
+                title: "Welk dier wordt het meest gebruikt in de jacht?",
+                options: ["De hond", "Het paard", "De valk"],
+                correct: 0
+            },
+            {
+                level: "Makkelijk",
+                artwork: "Stilleven met uil en jachtbuit - Peeter Boel",
+                image: "https://images.unsplash.com/photo-1582561246194-49c9584284cf?auto=format&fit=crop&w=800&q=80",
+                title: "Op welk kunstwerk staat deze vogel (uil)?",
+                options: ["Stilleven met uil en jachtbuit - Peeter Boel", "De Jacht van hertog", "Stilleven met dode eend"],
+                correct: 0
+            },
+            {
+                level: "Makkelijk",
+                artwork: "Portret met zwaan",
+                image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80",
+                title: "Wat heeft deze vrouw vast op het schilderij?",
+                options: ["Een zwaan", "Een gans", "Een pauw"],
+                correct: 0
+            },
+            {
+                level: "Moeilijk",
+                artwork: "The Kill - Petrus Johannes van Reysschoot",
+                image: "https://images.unsplash.com/photo-1554188248-986afbb73342?auto=format&fit=crop&w=800&q=80",
+                title: "In welk werk wordt er een muzikaal instrument (jachthoorn) gebruikt?",
+                options: ["The Kill (Het doden van het hert)", "Stilleven met uil", "Het Koningsfeest"],
+                correct: 0
+            },
+            {
+                level: "Moeilijk",
+                artwork: "Lokdieren in de jacht",
+                image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80",
+                title: "Welk dier werd in de 17e-eeuwse jacht vaak als lokdier gebruikt?",
+                options: ["Een uil", "Een hond", "Een duif"],
+                correct: 0
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score1 = 0;
+        let score2 = 0;
+        let timerInterval;
+        let timeLeft = 45;
+
+        // Web Audio API voor Hallali hoornsignaal simulatie bij goed antwoord
+        function playVictorySound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(261.63, audioCtx.currentTime); // C4
+                osc.frequency.exponentialRampToValueAtTime(523.25, audioCtx.currentTime + 0.3); // C5
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.8);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.8);
+            } catch(e) {
+                console.log("Audio not supported or blocked");
+            }
+        }
+
+        function startGame() {
+            document.getElementById('screen-start').classList.add('hidden');
+            document.getElementById('screen-game').classList.remove('hidden');
+            document.getElementById('game-status').classList.remove('hidden');
+            currentQuestionIndex = 0;
+            score1 = 0;
+            score2 = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                endGame();
+                return;
+            }
+
+            const q = questions[currentQuestionIndex];
+            document.getElementById('round-indicator').innerText = currentQuestionIndex + 1;
+            document.getElementById('question-tag').innerText = q.level;
+            document.getElementById('question-text').innerText = q.title;
+            document.getElementById('artwork-title').innerText = q.artwork;
+            document.getElementById('artwork-container').style.backgroundImage = `url('${q.image}')`;
+
+            // Reset Timer
+            clearInterval(timerInterval);
+            timeLeft = 45;
+            document.getElementById('timer').innerText = timeLeft;
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').innerText = timeLeft;
+                if(timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    nextQuestion();
+                }
+            }, 1000);
+
+            renderOptions('p1', q);
+            renderOptions('p2', q);
+        }
+
+        function renderOptions(player, q) {
+            const container = document.getElementById(`options-${player}`);
+            container.innerHTML = '';
+            
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-3.5 rounded-xl bg-stone-900/80 border border-stone-800 hover:border-amber-600/60 hover:bg-stone-900 text-stone-200 text-sm md:text-base transition-all flex justify-between items-center group";
+                btn.innerHTML = `<span>${opt}</span> <span class="text-xs text-stone-500 group-hover:text-amber-400">Kies →</span>`;
+                btn.onclick = () => handleAnswer(player, idx, q.correct);
+                container.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(player, selectedIdx, correctIdx) {
+            if (selectedIdx === correctIdx) {
+                playVictorySound();
+                if (player === 'p1') score1 += 10;
+                else score2 += 10;
+                
+                document.getElementById('score-1').innerText = score1;
+                document.getElementById('score-2').innerText = score2;
+            }
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            clearInterval(timerInterval);
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function endGame() {
+            document.getElementById('screen-game').classList.add('hidden');
+            document.getElementById('game-status').classList.add('hidden');
+            document.getElementById('screen-end').classList.remove('hidden');
+
+            const winnerText = score1 > score2 ? "Speler 1 (De Vos) heeft gewonnen!" : score2 > score1 ? "Speler 2 (De Jager) heeft gewonnen!" : "Het is gelijkspel!";
+            document.getElementById('winner-announcement').innerText = winnerText;
+        }
+
+        function resetGame() {
+            document.getElementById('screen-end').classList.add('hidden');
+            document.getElementById('screen-start').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
